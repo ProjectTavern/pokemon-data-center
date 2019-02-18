@@ -5,15 +5,15 @@ import urllib
 import json
 
 
-def index(request):
+def pokemon(request):
     """
     포켓몬 데이터를 전송
     :param request:
     :return:
     """
     request_data = request.GET.dict()
-    if 'pokemon' in request_data:
-        pokemon_no = request_data['pokemon']
+    if 'no' in request_data:
+        pokemon_no = request_data['no']
     else:
         pokemon_no = 0
 
