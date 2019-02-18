@@ -11,19 +11,25 @@ def index(request):
     :param request:
     :return:
     """
+    request_data = request.GET.dict()
+    if 'pokemon' in request_data:
+        pokemon_no = request_data['pokemon']
+    else:
+        pokemon_no = 0
 
     HttpResponse()['content_type'] = 'application/json; charset=utf-8'
     url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRm_Lc0uln_go1zCm1kqSZ6NU2lWZzFwbVUYrda6HVE6W5r62MjDhTCTa4PkDQ6s7PP0BME01jbE23s/pub?output=csv'
     pokemon_data = urllib.request.urlopen(url).read().decode('utf-8').split('\r\n')
-    result = get_pokemon(pokemon_data)
+    result = get_pokemon(pokemon_data, int(pokemon_no))
 
     return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json")
 
 
-def get_pokemon(pokemon_data):
+def get_pokemon(pokemon_data, pokemon_no):
     """
     포켓몬 데이터를 사전형으로 렌더링
     :param pokemon_data:
+    :param pokemon_no:
     :return:
     """
     columns = []
@@ -38,9 +44,15 @@ def get_pokemon(pokemon_data):
             continue
         single = {'no': poke_no}
         monster = row.split(',')
-        for monsterData in range(len(columns)):
-            single[columns[monsterData]] = monster[monsterData]
-        pokemon.append(single)
+
+        if 0 < pokemon_no < 152 and pokemon_no == poke_no:
+            for monsterData in range(len(columns)):
+                single[columns[monsterData]] = monster[monsterData]
+            pokemon.append(single)
+        elif 0 >= pokemon_no or pokemon_no >= 152:
+            for monsterData in range(len(columns)):
+                single[columns[monsterData]] = monster[monsterData]
+            pokemon.append(single)
 
     return {'result': pokemon}
 

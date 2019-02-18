@@ -19,7 +19,7 @@ from pokemon.views import index
 from pokemon.views import test
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', index),
+    path('admin/', admin.site.urls),
     path('test/', test)
 ]
