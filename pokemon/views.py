@@ -50,14 +50,14 @@ def get_pokemon(pokemon_data, pokemon_no):
                 if columns[monsterData] == 'sum' or columns[monsterData] == 'specialAttack' or columns[monsterData] == 'captureRate' or columns[monsterData] == 'defence' or columns[monsterData] == 'speed' or columns[monsterData] == 'hp' or columns[monsterData] == 'attackDamage' or columns[monsterData] == 'specialDefence':
                     single[columns[monsterData]] = int(monster[monsterData])
                 else:
-                    single[columns[monsterData]] = monster[monsterData]
+                    single[columns[monsterData]] = monster[monsterData].strip('\"')
             pokemon.append(single)
         elif 0 >= pokemon_no or pokemon_no >= 152:
             for monsterData in range(len(columns)):
                 if columns[monsterData] == 'sum' or columns[monsterData] == 'specialAttack' or columns[monsterData] == 'captureRate' or columns[monsterData] == 'defence' or columns[monsterData] == 'speed' or columns[monsterData] == 'hp' or columns[monsterData] == 'attackDamage' or columns[monsterData] == 'specialDefence':
                     single[columns[monsterData]] = int(monster[monsterData])
                 else:
-                    single[columns[monsterData]] = monster[monsterData]
+                    single[columns[monsterData]] = monster[monsterData].strip('\"')
             pokemon.append(single)
 
     return {'result': pokemon}
