@@ -37,7 +37,7 @@ def get_pokemon(pokemon_data, pokemon_no):
     for tag in pokemon_data[0].split(','):
         columns.append(tag)
 
-    pokemon = []
+    pokemon_result = []
 
     for poke_no, row in enumerate(pokemon_data):
         if poke_no == 0:
@@ -45,24 +45,24 @@ def get_pokemon(pokemon_data, pokemon_no):
         single = {'no': poke_no}
         status = {}
         monster = row.split(',')
+
         if 0 < pokemon_no < 152 and pokemon_no == poke_no:
             for monsterData in range(len(columns)):
                 if columns[monsterData] == 'sum' or columns[monsterData] == 'specialAttack' or columns[monsterData] == 'captureRate' or columns[monsterData] == 'defence' or columns[monsterData] == 'speed' or columns[monsterData] == 'hp' or columns[monsterData] == 'attackDamage' or columns[monsterData] == 'specialDefence':
                     status[columns[monsterData]] = int(monster[monsterData])
                 else:
                     single[columns[monsterData]] = monster[monsterData].strip('\"')
-            single['status'] = status
-            pokemon.append(single)
-        else:
+            pokemon_result.append(single)
+        elif 0 >= pokemon_no or pokemon_no >= 152:
             for monsterData in range(len(columns)):
                 if columns[monsterData] == 'sum' or columns[monsterData] == 'specialAttack' or columns[monsterData] == 'captureRate' or columns[monsterData] == 'defence' or columns[monsterData] == 'speed' or columns[monsterData] == 'hp' or columns[monsterData] == 'attackDamage' or columns[monsterData] == 'specialDefence':
                     status[columns[monsterData]] = int(monster[monsterData])
                 else:
                     single[columns[monsterData]] = monster[monsterData].strip('\"')
             single['status'] = status
-            pokemon.append(single)
+            pokemon_result.append(single)
 
-    return {'result': pokemon}
+    return {'result': pokemon_result}
 
 
 def test(request):
