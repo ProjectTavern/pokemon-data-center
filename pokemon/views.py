@@ -33,11 +33,10 @@ def get_pokemon(pokemon_data, pokemon_no):
     :return:
     """
     columns = []
+    pokemon_result = []
 
     for tag in pokemon_data[0].split(','):
         columns.append(tag)
-
-    pokemon_result = []
 
     for poke_no, row in enumerate(pokemon_data):
         if poke_no == 0:
